@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PensiónARTE | Presentación</title>
+  <style>
+    :root {
+      --bg: #204051;
+      --text: #c4a058;
+      --text-soft: rgba(196, 160, 88, 0.78);
+      --line: rgba(196, 160, 88, 0.6);
+      
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      overflow: hidden;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+    }
+
+    .stage {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .intro {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      z-index: 3;
+      background: var(--bg);
+      transition: opacity 900ms ease, transform 900ms ease;
+    }
+
+    .intro.hidden {
+      opacity: 0;
+      transform: scale(1.02);
+      pointer-events: none;
+    }
+
+    .intro-logo {
+      width: min(100vw, 600px);
+      max-width: 900px;
+      height: auto;
+      opacity: 0;
+      transform: scale(0.94) translateY(6px);
+      animation: logoFadeIn 1.35s ease forwards;
+            user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    @keyframes logoFadeIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.92) translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .main {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      padding: clamp(24px, 4vw, 56px);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 900ms ease, transform 900ms ease;
+      z-index: 2;
+    }
+
+    .main.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .left {
+      padding-right: clamp(18px, 3vw, 40px);
+    }
+
+    .name {
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      margin: 0 0 0.5rem 0;
+      color: var(--text);
+      text-wrap: balance;
+    }
+
+    .role {
+      font-size: clamp(1rem, 2vw, 1.45rem);
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: 0.45em;
+      text-transform: none;
+      margin: 0;
+      color: var(--text-soft);
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    .main.visible .role {
+      animation: riseIn 900ms ease 180ms forwards;
+    }
+
+    .contact-panel {
+      position: relative;
+      justify-self: end;
+      width: min(100%, 420px);
+      padding-left: clamp(18px, 2vw, 28px);
+    }
+
+    .contact-panel::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8%;
+      bottom: 8%;
+      width: 2px;
+      background: var(--line);
+      opacity: 0;
+      transform: scaleY(0.7);
+    }
+
+    .main.visible .contact-panel::before {
+      animation: lineGrow 850ms ease 350ms forwards;
+    }
+
+    .contact-group {
+      display: grid;
+      gap: 16px;
+    }
+
+    .contact-block {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      align-items: start;
+      gap: 14px;
+      opacity: 0;
+      transform: translateX(22px);
+    }
+
+    .main.visible .contact-block.whatsapp {
+      animation: slideIn 850ms ease 520ms forwards;
+    }
+
+    .main.visible .contact-block.email {
+      animation: slideIn 850ms ease 760ms forwards;
+    }
+
+    .icon-wrap {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      flex: none;
+    }
+
+    .icon-wrap img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+          }
+
+    .contact-text {
+      display: grid;
+      gap: 2px;
+      color: var(--text);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      font-size: clamp(1rem, 1.8vw, 1.5rem);
+      line-height: 1.15;
+    }
+
+    .contact-text .muted {
+      opacity: 0.92;
+    }
+
+    .contact-text a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .contact-text a:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .spacer {
+      height: 10px;
+    }
+
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes lineGrow {
+      from {
+        opacity: 0;
+        transform: scaleY(0.55);
+      }
+      to {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .main {
+        grid-template-columns: 1fr;
+        gap: 42px;
+        align-content: center;
+      }
+
+      .left {
+        padding-right: 0;
+      }
+
+      .contact-panel {
+        justify-self: start;
+        width: 100%;
+        max-width: 420px;
+      }
+
+      .name {
+        letter-spacing: 0.09em;
+      }
+
+      .role {
+        letter-spacing: 0.22em;
+      }
+    }
+
+    @media (max-width: 520px) {
+      html, body {
+        overflow: auto;
+      }
+
+      .stage {
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .main {
+        padding: 18px 18px 22px;
+        transform: translateY(-18px);
+      }
+
+      .main.visible {
+        transform: translateY(-70px);
+      }
+
+      .left {
+        margin-top: -4px;
+      }
+
+      .contact-group {
+        gap: 22px;
+      }
+
+      .contact-text {
+        gap: 4px;
+      }
+
+      .contact-block {
+        grid-template-columns: 46px 1fr;
+        gap: 10px;
+      }
+
+      .icon-wrap {
+        width: 46px;
+        height: 46px;
+      }
+
+      .icon-wrap img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .contact-panel::before {
+        top: 0;
+        bottom: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .intro-logo,
+      .role,
+      .contact-block,
+      .contact-panel::before,
+      .main {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .intro {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <section class="intro" id="intro" aria-label="Intro de presentación">
+      <img src="logo.png" alt="Logo de PensiónARTE" class="intro-logo" />
+    </section>
+
+    <section class="main" id="main" aria-label="Información de contacto">
+      <div class="left">
+        <h1 class="name">Cinthya L. Correa</h1>
+        <p class="role">Pension Advisor</p>
+      </div>
+
+      <aside class="contact-panel">
+        <div class="contact-group">
+          <div class="contact-block whatsapp">
+            <div class="icon-wrap">
+              <img src="whatsapp.png" alt="Icono de WhatsApp" />
+            </div>
+            <div class="contact-text">
+              <a href="https://wa.me/527711126305" target="_blank" rel="noopener noreferrer">+52 77 1112 6305</a>
+              <a href="https://wa.me/527713276454" target="_blank" rel="noopener noreferrer">+52 77 1327 6454</a>
+            </div>
+          </div>
+
+          <div class="spacer"></div>
+
+          <div class="contact-block email">
+            <div class="icon-wrap">
+              <img src="email.png" alt="Icono de correo" />
+            </div>
+            <div class="contact-text">
+              <a href="mailto:info.pensionarte@gmail.com">info.pensionarte@gmail.com</a>
+              <a href="mailto:lopez.cinthya@principal.com">lopez.cinthya@principal.com</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    window.addEventListener("load", () => {
+      const intro = document.getElementById("intro");
+      const main = document.getElementById("main");
+
+      const introDuration = 2500;
+      const fadeOutDuration = 1200;
+
+      setTimeout(() => {
+        intro.classList.add("hidden");
+        main.classList.add("visible");
+      }, introDuration);
+
+      setTimeout(() => {
+        intro.style.display = "none";
+      }, introDuration + fadeOutDuration + 50);
+    });
+  </script>
+</body>
+</html>
